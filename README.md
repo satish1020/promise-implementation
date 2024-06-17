@@ -1,23 +1,25 @@
-// Sample test promise implementation
-// as we can see below promise takes a call back function.
-// so we define callback function in the constructor.
-// we use this callback when it is a success or failure. so we need to pass two functions onSuccess and OnFailure.
-// we see that we pass a call back in .then and .catch. then will be executed on success and catch will be executed on failure.
-// const testPromise = new Promise((resolve, reject) => {})
-//   .then(() => {})
-//   .catch(() => {})
-//   .finally();
-// // .then can be called multiple times.
-// testPromise.then();
-// testPromise.then();
-// As seen above promise has three methods exposed then, catch, finally.
-// So the other methods success and fail which call back function passes in the place of resolve and failure are private methods.
-// So declare them as #. Lets implement public function then and catch and finally which will take callback as params.
-// we need to save .then callback somewhere, as we will have to provide an option to call multiple .then for a promise.
-//Lets save this callback in an array called callBackList. every single time we call .then it will be added to call back list.
-// then on success we need to call each of the call back in the callBackList, with the value in the onResolve parameter.
-// the promises keep track of the values that are resolved, rejected etc.. So we need a state, lets declare a state variable.
-// lets also declare a value variable which will have the value on resolve or reject.
+This project teaches you how to use javascript concepts like call, apply, bind, reduce, curry, and promise.
+
+Sample test promise implementation
+as we can see below promise takes a call back function.
+so we define callback function in the constructor.
+we use this callback when it is a success or failure. so we need to pass two functions onSuccess and OnFailure.
+ we see that we pass a call back in .then and .catch. then will be executed on success and catch will be executed on failure.
+const testPromise = new Promise((resolve, reject) => {})
+ .then(() => {})
+ .catch(() => {})
+ .finally();
+ .then can be called multiple times.
+ testPromise.then();
+testPromise.then();
+As seen above promise has three methods exposed then, catch, finally.
+So the other methods success and fail which call back function passes in the place of resolve and failure are private methods.
+So declare them as #. Lets implement public function then and catch and finally which will take callback as params.
+we need to save .then callback somewhere, as we will have to provide an option to call multiple .then for a promise.
+Lets save this callback in an array called callBackList. every single time we call .then it will be added to call back list.
+then on success we need to call each of the call back in the callBackList, with the value in the onResolve parameter.
+the promises keep track of the values that are resolved, rejected etc.. So we need a state, lets declare a state variable.
+lets also declare a value variable which will have the value on resolve or reject.
 
 https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
 
@@ -37,7 +39,7 @@ A promise is unresolved if it is not resolved, i.e. if trying to resolve or reje
 A promise can be "resolved to" either a promise or thenable, in which case it will store the promise or thenable for later unwrapping; or it can be resolved to a non-promise value, in which case it is fulfilled with that value.
 
 // const { resolve } = require("./MyPromise");
-
+<!-- 
 let p = new Promise((resolve,reject)=>{
 const a= 1 + 1
 if(a ===2)
@@ -47,7 +49,7 @@ if(a ===2)
 else{
 reject("failure")
 }
-})
+}) -->
 <!-- 
 // anything inside .then will run for resolve.
 // to catch error we need to call catch
@@ -87,7 +89,7 @@ Promise.race([recordVideo1,recordVideo2, recordVideo3]).then((message)=>{
 <!-- https://medium.com/@sharareshaddev/understanding-promises-in-javascript-and-their-use-in-react-a77564aae576 -->
 
 
-const myPromise = new Promise((resolve, reject) => {
+<!-- const myPromise = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve("foo");
   }, 300);
@@ -100,7 +102,7 @@ myPromise
   .catch()
   .catch()
   .finally();
-  
+   -->
 
   <!-- curry -->
 <!-- lodash implementation curry. -->
@@ -274,3 +276,9 @@ Notes
 this should be preserved when calling the original function, which can be achieved by using an arrow function.
 Overriding Object.prototype.valueOf and Object.prototype.toString works as well, but defining an implementation for Symbol.toPrimitive is more reliable.
 
+<!-- call, apply, bind, reduce -->
+https://www.youtube.com/watch?v=75W8UPQ5l7k&t=579s&pp=ygUbY2FsbCBiaW5kIGFwcGx5IGphdmFzY3JpcHQg
+
+
+<!-- reduce javascript -->
+https://www.youtube.com/watch?v=zdp0zrpKzIE&t=5s&pp=ygURcmVkdWNlIGphdmFzY3JpcHQ%3D
