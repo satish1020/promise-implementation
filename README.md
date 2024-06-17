@@ -101,3 +101,176 @@ myPromise
   .catch()
   .finally();
   
+
+  <!-- curry -->
+<!-- lodash implementation curry. -->
+  https://lodash.com/docs/4.17.15#curry
+<!-- Understanding curry -->
+ https://blog.logrocket.com/understanding-javascript-currying
+
+ <!-- curry1 -->
+
+ Currying is the technique of converting a function that takes multiple arguments into a sequence of functions that each takes a single argument.
+
+Implement the curry function which accepts a function as the only argument and returns a function that accepts single arguments and can be repeatedly called until at least the minimum number of arguments have been provided (determined by how many arguments the original function accepts). The initial function argument is then invoked with the provided arguments.
+
+
+question:
+function add(a, b) {
+  return a + b;
+}
+
+const curriedAdd = curry(add);
+curriedAdd(3)(4); // 7
+
+const alreadyAddedThree = curriedAdd(3);
+alreadyAddedThree(4); // 7
+
+
+solution:
+Currying is not commonly used in real-world development but is a moderately common question for interviews as it tests the candidate's understanding of certain JavaScript fundamentals like arity and closures.
+
+Clarification Questions
+What value types will curry expect?
+Should the function expect values of different types?
+Solution
+We first need to understand a few terms:
+
+Arity: The number of arguments or operands taken by a function.
+Closure: A closure is the combination of a function bundled together with references to its lexical environment (surrounding state).
+The curried function will stop accepting arguments after the number of arguments that have been passed into the curried function equals the arity of the original function.
+
+We can keep a record of the curried function arguments so far via closures. Each time the curried function is called, we compare the number of arguments so far with the arity of the original function.
+
+If they're the same, we call the original function with the arguments.
+If more arguments are needed, we will return a function that accepts more arguments and invokes the curried function with the new arguments.
+Note that the inner function needs to be defined using arrow functions to preserve the same lexical this or manually tracked using a separate variable like in Debounce.
+
+
+  <!-- curry2 -->
+
+  Note: This is an advanced version of Curry, you should complete that first before attempting this question.
+
+Currying is the technique of converting a function that takes multiple arguments into a sequence of functions that each takes a single argument.
+
+Implement the curry function which accepts a function as the only argument and returns a function that accepts any number of arguments (vs only one argument at a time in Curry) and returns a function which can be repeatedly called until at least the minimum number of arguments has been provided (determined by how many arguments the original function accepts). The initial function argument is then invoked with the provided arguments.
+
+
+Examples
+function addTwo(a, b) {
+  return a + b;
+}
+const curriedAddTwo = curry(addTwo);
+curriedAddTwo(3)(4); // 7
+curriedAddTwo(3, 4); // 7
+const alreadyAddedThree = curriedAddTwo(3);
+alreadyAddedThree(4); // 7
+function multiplyThree(a, b, c) {
+  return a * b * c;
+}
+const curriedMultiplyThree = curry(multiplyThree);
+curriedMultiplyThree(4)(5)(6); // 120
+curriedMultiplyThree(4)(5, 6); // 120
+curriedMultiplyThree(4, 5)(6); // 120
+curriedMultiplyThree(4, 5, 6); // 120
+
+const containsFour = curriedMultiplyThree(4);
+const containsFourMulFive = containsFour(5);
+containsFourMulFive(6); // 120
+Try these questions next
+Curry III
+Difficulty
+Hard
+Similar Questions
+Curry
+Difficulty
+Medium
+
+solution:
+
+Currying is not commonly used in real-world development but is a moderately common question for interviews as it tests the candidate's understanding of certain JavaScript fundamentals like arity and closures.
+
+Clarification Questions
+What value types will curry expect?
+Should the function expect values of different types?
+Solution
+We first need to understand a few terms:
+
+Arity: The number of arguments or operands taken by a function.
+Closure: A closure is the combination of a function bundled together with references to its lexical environment (surrounding state).
+The curried function will stop accepting arguments after the number of arguments have been passed into the curried function equals the arity of the original function.
+
+We can keep a record of the curried function arguments so far via closures. Each time the curried function is called, we compare the number of arguments so far with the arity of the original function.
+
+If they're the same, we call the original function with the arguments.
+If more arguments are needed, we will return a function that accepts more arguments and invokes the curried function with the new arguments.
+The solutions for this question can also work for Curry, because this solution is a general version that doesn't make any assumptions on the number of arguments needed.
+
+Edge Cases
+Calling the function without any arguments should not have any effect, unless the function does not take in any arguments.
+Functions which access this. Do test this case for curried functions that are meant to receive multiple arguments as well.
+Techniques
+Closures.
+Invoking functions via Function.prototype.apply()/Function.prototype.call().
+Notes
+Intermediate functions should be reusable as seen from the examples in the question description.
+  <!-- curry3 -->
+question:
+
+Note: This is an advanced version of Curry II, you should complete that first before attempting this question. Also, this is a hard question and resembles a brainteaser more than an actual question candidates are expected to solve. However, solving this question is rewarding and is sure to improve your knowledge of JavaScript.
+
+Currying is the technique of converting a function that takes multiple arguments into a sequence of functions that each takes a single argument.
+
+Implement the curry function which accepts a function as the only argument and returns a function that accepts a variadic number of arguments (vs only one argument at a time in Curry and a fixed number of arguments in Curry II) and returns a function which can be repeatedly called.
+
+Expected Behaviour of Output
+When the returned function is in an expression that suggests the value should be a string or a number, the initial function argument is then invoked with the provided arguments and the result is used as the value.
+
+Examples
+function multiply(...numbers) {
+  return numbers.reduce((a, b) => a * b, 1);
+}
+const curriedMultiply = curry(multiply);
+const multiplyByThree = curriedMultiply(3);
+console.log(multiplyByThree); // 3
+console.log(multiplyByThree(4)); // 12
+
+const multiplyByFifteen = multiplyByThree(5);
+console.log(multiplyByFifteen); // 15
+console.log(multiplyByFifteen(2)); // 30
+
+console.log(curriedMultiply(1)(2)(3)(4)); // 24
+console.log(curriedMultiply(1, 2, 3, 4)); // 24
+Hint
+Look up the Symbol.toPrimitive, Object.prototype.toString() and Object.prototype.valueOf() functions.
+
+  Solution
+Implicit type conversion is the fundamental concept that we need to be aware of here. When variable are used in scenarios with mismatched types, implicit type conversion happens as an attempt to make the operation succeed. Here are some examples from MDN regarding type conversions:
+
+const foo = 42; // foo is a number
+const result = foo + '1'; // JavaScript coerces foo to a string, so it can be concatenated with the other operand.
+console.log(result); // 421
+
+const bar = '42'; // bar is a string
+const result2 = 2 * bar; // JavaScript coerces bar to a number, so it can be multiplied with the other operand.
+console.log(result2); // 84
+The function returned by curry (we call it curried) is a function, which is a JavaScript object. Under usual circumstances, when a function is coerced into a string, the function's code is used as the string value:
+
+function foo(a, b) {
+  return a + b;
+}
+console.log('hey ' + foo); // hey function foo(a, b) { return a + b }
+This is not what we want. We want to call arbitrary logic when a function is used as a primitive value. In order for objects to be used as a primitive value (when being used in console.log() or in expressions), we can override the Symbol.toPrimitive property on objects, which is a method that accepts a preferred type and returns a primitive representation of an object.
+
+Hence the solution to this question can be obtained by modifying the solution of Curry II slightly and calling func.apply(this, args) within the method of Symbol.toPrimitive.
+
+Edge Cases
+Functions which access this.
+Techniques
+Closures.
+Invoking functions via Function.prototype.apply()/Function.prototype.call().
+Type coercion.
+Notes
+this should be preserved when calling the original function, which can be achieved by using an arrow function.
+Overriding Object.prototype.valueOf and Object.prototype.toString works as well, but defining an implementation for Symbol.toPrimitive is more reliable.
+

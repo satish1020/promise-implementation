@@ -28,7 +28,55 @@ const curriedTotal = curryByClosure(total);
 console.log("curried closure total", curriedTotal(10, 20, 30));
 
 
-// console.log(Multiply(4,5)) //returns 20
+// curry implementation
 
-// const MultiplyFive = Multiply(5);
-// console.log('MultiplyFive', MultiplyFive); //returns y = x* y
+/**
+ * @param {Function} func
+ * @return {Function}
+ */
+// export default function curry(func) {
+//   return function curried(...args) {
+//     if (args.length >= func.length) {
+//       return func.apply(this, args);
+//     }
+
+//     return (arg) =>
+//       arg === undefined
+//         ? curried.apply(this, args)
+//         : curried.apply(this, [...args, arg]);
+//   };
+// }
+
+
+// alternative
+
+/**
+ * @param {Function} func
+ * @return {Function}
+ */
+// export default function curry(func) {
+//   return function curried(...args) {
+//     if (args.length >= func.length) {
+//       return func.call(this, ...args);
+//     }
+
+//     return (arg) =>
+//       arg === undefined
+//         ? curried.call(this, ...args)
+//         : curried.call(this, ...args, arg);
+//   };
+// }
+
+/**
+ * @param {Function} func
+ * @return {Function}
+ */
+export default function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args);
+    }
+
+    return curried.bind(this, ...args);
+  };
+}
